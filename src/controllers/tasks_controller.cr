@@ -1,3 +1,4 @@
+require "json"
 require "../models/task.cr"
 
 class TasksController < Application
@@ -21,46 +22,38 @@ class TasksController < Application
     render json: {task: task}
   end
 
-  # def create
-  #   task = Task.new
+  def create
+    task = Task.new(JSON.parse(request.body.as(IO)))
 
-  #   # From params
-  #   task.title = params["title"]
-  #   task.note = params["note"]
+    task.save
 
-  #   # From JSON
-
-  #   task.save
-
-  #   if task.save
-  #     render json: task
-  #   else
-  #     render json: {error: "An error has occurred"}
-  #   end
-  # end
+    if task.save
+      render json: {task: task}
+    else
+      render json: {error: "An error has occurred"}
+    end
+  end
 
   # def update
-  #   task = Task.query.where(id: params["id"])
+  #   # task = set_task  # In the future switch entirely to set_task
+  #   task = Task.query.find({id: params["id"]})
+  #   update_params = JSON.parse(request.body.as(IO)) # task.save
 
-  #   # From params
-  #   task.each { |task_unit| task_unit.update(title: params["title"], note: params[
-  #     "note",
-  #   ]) }
+  #   if !task.nil?
+  #     task.update(title: update_params["title"].to_s) if !update_params["title"].nil?
+  #     task.update(note: update_params["note"].to_s) if !update_params["note"].nil?
 
-  #   # From JSON
-
-  #   task.save
-
-  #   if task.save
-  #     render json: task
-  #     # redirect_to TasksController.show(task.id)
+  #     if task.save
+  #       render json: {task: task}
+  #       # redirect_to TasksController.show(task.id)
+  #     end
   #   else
   #     render json: {error: "An error has occurred"}
   #   end
   # end
 
   def delete
-    # task = set_task
+    # task = set_task  # In the future switch entirely to set_task
     task = Task.query.find({id: params["id"]})
 
     task.delete if !task.nil?

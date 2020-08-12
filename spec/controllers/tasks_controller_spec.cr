@@ -44,7 +44,7 @@ describe TasksController do
     data.as_h["task"]["id"].should eq(task1.id)
   end
 
-  it "should find delete a task", focus: true do
+  pending "should find delete a task" do
     response = IO::Memory.new
     context = context("DELETE", "/tasks/#{task1.id}", response_io: response)
     context.route_params = {"id" => task1.id.not_nil!.to_s} # What does this mean?
@@ -64,34 +64,40 @@ describe TasksController do
     data.as_a.size.should eq(1)
   end
 
-  # pending "should create and update a task" do
-  #   # instantiate the controller
-  #   body = IO::Memory.new
-  #   body << %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
-  #   # body << {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
-  #   body.rewind
-  #   response = IO::Memory.new
-  #   new_context = context("POST", "/tasks", body, response_io: response)
-  #   app = TasksController.new(new_context)
-  #   app.create
+  it "should create and update a task", focus: true do
+    # instantiate the controller
+    body = IO::Memory.new
+    body << %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
+    body.rewind
+    # body = %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
 
-  #   data = response.to_s.split("\r\n").reject(&.empty?)[-1]
-  #   created = Task.from_json(data)
-  #   created.title.should eq("Finish Dostoyevsky's crime and punishment'")
-  #   created.note.should eq("Read excerpts of notes from underground")
+    response = IO::Memory.new
+    context = context("POST", "/tasks", body: body, response_io: response)
+    app = TasksController.new(context)
+    app.create
 
-  #   # # instantiate the controller
-  #   # body = IO::Memory.new
-  #   # # body << %({"note":"read Nietzsche's zarathustra"})
-  #   # body << {note: "read Nietzsche's zarathustra"}
-  #   # body.rewind
-  #   # response = IO::Memory.new
-  #   # context = context("PATCH", "/tasks/#{created.id}", body, response_io: response)
-  #   # context.route_params = {"id" => created.id.to_s}
-  #   # app = TasksController.new(context)
-  #   # app.update
+    data = response.to_s.split("\r\n").reject(&.empty?)[-1]
+    created = JSON.parse(data)
+    created = created["task"]
+    puts data
+    created["title"].should eq("Finish Dostoyevsky's crime and punishment")
+    created["note"].should eq("Read excerpts of notes from underground")
 
-  #   # updated = Task.from_json(response.to_s.split("\r\n").reject(&.empty?)[-1])
-  #   # updated.note.should eq("read Nietzsche's zarathustra")
-  # end
+    # # instantiate the controller
+    # body = IO::Memory.new
+    # body << %({"note":"read Nietzsche's zarathustra"})
+    # body.rewind
+    # response = IO::Memory.new
+    # context = context("PATCH", "/tasks/#{created["id"]}", body: body, response_io: response)
+    # context.route_params = {"id" => created["id"].to_s}
+    # app = TasksController.new(context)
+    # app.update
+
+    # updated = JSON.parse(response.to_s.split("\r\n").reject(&.empty?)[-1])
+    # updated = updated["task"]
+
+    # puts updated
+
+    # # updated["note"].should eq("read Nietzsche's zarathustra")
+  end
 end
