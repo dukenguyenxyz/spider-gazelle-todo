@@ -4,9 +4,12 @@ version: 1.0.0
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: "~> 3.0"
+    version: '~> 3.0'
   active-model:
     github: spider-gazelle/active-model
+  clear:
+    github: anykeyh/clear
+    branch: master
 
   # Extends ENV to read values injected by docker and kubernetes secrets
   secrets-env:
@@ -25,3 +28,5 @@ development_dependencies:
 targets:
   app:
     main: src/app.cr
+  clear:
+    main: lib/clear/src/clear/cli.cr

@@ -19,6 +19,8 @@ module App
   COOKIE_SESSION_KEY    = ENV["COOKIE_SESSION_KEY"]? || "_spider_gazelle_"
   COOKIE_SESSION_SECRET = ENV["COOKIE_SESSION_SECRET"]? || "4f74c0b358d5bab4000dd3c75465dc2c"
 
+  POSTGRES_URI = ENV["POSTGRES_URI"]? || "postgresql://macbook:passgres@localhost:5432/crystal_to_do"
+
   def self.running_in_production?
     ENVIRONMENT == "production"
   end

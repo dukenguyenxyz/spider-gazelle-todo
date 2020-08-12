@@ -8,9 +8,21 @@ shards:
     git: https://github.com/spider-gazelle/active-model.git
     version: 1.8.4
 
+  admiral:
+    git: https://github.com/jwaldrip/admiral.cr.git
+    version: 1.11.2+git.commit.c3c3467953654554b72c24e7b853d6fbb23f10c0
+
   ameba:
     git: https://github.com/veelenga/ameba.git
     version: 0.12.1
+
+  clear:
+    git: https://github.com/anykeyh/clear.git
+    version: 0.8+git.commit.4120e5e9bdea4d1ea78c9c7c74b6deb65bfcebe2
+
+  db:
+    git: https://github.com/crystal-lang/crystal-db.git
+    version: 0.9.0
 
   delimiter_tree:
     git: https://github.com/drujensen/delimiter_tree.git
@@ -20,9 +32,17 @@ shards:
     git: https://github.com/crystal-community/future.cr.git
     version: 0.1.0
 
+  generate:
+    git: https://github.com/anykeyh/generate.cr.git
+    version: 0.1.0+git.commit.27a59d663ded8ce39a361e3a88b8dd747f59ce42
+
   habitat:
     git: https://github.com/luckyframework/habitat.git
     version: 0.4.3
+
+  inflector:
+    git: https://github.com/phoffer/inflector.cr.git
+    version: 0.1.8
 
   json_mapping:
     git: https://github.com/crystal-lang/json_mapping.cr.git
@@ -31,6 +51,10 @@ shards:
   kilt:
     git: https://github.com/jeromegn/kilt.git
     version: 0.6.0
+
+  pg:
+    git: https://github.com/will/crystal-pg.git
+    version: 0.21.1+git.commit.cafe111fc28e366c219144d5f656c3718d7357dd
 
   secrets-env:
     git: https://github.com/place-labs/secrets-env.git

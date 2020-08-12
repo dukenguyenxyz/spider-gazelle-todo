@@ -1,6 +1,6 @@
 # Application dependencies
 require "action-controller"
-require "active-model"
+require "clear" # require "active-model"
 require "kilt"
 require "./constants"
 
@@ -8,9 +8,17 @@ require "./constants"
 require "./controllers/application"
 require "./controllers/*"
 require "./models/*"
+require "./db/migrate/*"
 
 # Server required after application controllers
 require "action-controller/server"
+
+# initialize a pool of database connection:
+Clear::SQL.init(App::POSTGRES_URI,
+  connection_pool_size: 5)
+
+# # Run migration
+# Clear::Migration::Manager.instance.apply_all
 
 # Configure logging (backend defined in constants.cr)
 if App.running_in_production?
