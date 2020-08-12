@@ -66,10 +66,10 @@ describe TasksController do
 
   it "should create and update a task", focus: true do
     # instantiate the controller
-    body = IO::Memory.new
-    body << %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
-    body.rewind
-    # body = %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
+    # body = IO::Memory.new
+    # body << %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
+    # body.rewind
+    body = %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
 
     response = IO::Memory.new
     context = context("POST", "/tasks", body: body, response_io: response)
@@ -79,25 +79,22 @@ describe TasksController do
     data = response.to_s.split("\r\n").reject(&.empty?)[-1]
     created = JSON.parse(data)
     created = created["task"]
-    puts data
     created["title"].should eq("Finish Dostoyevsky's crime and punishment")
     created["note"].should eq("Read excerpts of notes from underground")
 
-    # # instantiate the controller
+    # instantiate the controller
     # body = IO::Memory.new
     # body << %({"note":"read Nietzsche's zarathustra"})
     # body.rewind
-    # response = IO::Memory.new
-    # context = context("PATCH", "/tasks/#{created["id"]}", body: body, response_io: response)
-    # context.route_params = {"id" => created["id"].to_s}
-    # app = TasksController.new(context)
-    # app.update
+    body = %({"note":"read Nietzsche's zarathustra"})
 
-    # updated = JSON.parse(response.to_s.split("\r\n").reject(&.empty?)[-1])
-    # updated = updated["task"]
+    response = IO::Memory.new
+    context = context("PATCH", "/tasks/#{created["id"]}", body: body, response_io: response)
+    context.route_params = {"id" => created["id"].to_s}
+    app = TasksController.new(context)
+    app.update
 
-    # puts updated
-
-    # # updated["note"].should eq("read Nietzsche's zarathustra")
+    updated = JSON.parse(response.to_s.split("\r\n").reject(&.empty?)[-1])["task"]
+    updated["note"].should eq("read Nietzsche's zarathustra")
   end
 end

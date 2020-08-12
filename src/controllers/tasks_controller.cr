@@ -34,23 +34,26 @@ class TasksController < Application
     end
   end
 
-  # def update
-  #   # task = set_task  # In the future switch entirely to set_task
-  #   task = Task.query.find({id: params["id"]})
-  #   update_params = JSON.parse(request.body.as(IO)) # task.save
+  def update
+    # task = set_task  # In the future switch entirely to set_task
+    task = Task.query.find({id: params["id"]})
+    update_params = JSON.parse(request.body.as(IO)).as_h # task.save
 
-  #   if !task.nil?
-  #     task.update(title: update_params["title"].to_s) if !update_params["title"].nil?
-  #     task.update(note: update_params["note"].to_s) if !update_params["note"].nil?
+    if !task.nil?
+      update_params.each do |key, value|
+        task.title = value.to_s if key == "title"
+        task.note = value.to_s if key == "note"
+      end
 
-  #     if task.save
-  #       render json: {task: task}
-  #       # redirect_to TasksController.show(task.id)
-  #     end
-  #   else
-  #     render json: {error: "An error has occurred"}
-  #   end
-  # end
+      task.save
+      if task.save
+        render json: {task: update_params}
+        # redirect_to TasksController.show(task.id)
+      end
+    else
+      render json: {error: "An error has occurred"}
+    end
+  end
 
   def delete
     # task = set_task  # In the future switch entirely to set_task
