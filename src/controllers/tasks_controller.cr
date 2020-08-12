@@ -6,18 +6,17 @@ class TasksController < Application
   getter task : Task?
 
   def index
-    results = [] of Task
+    tasks = [] of Task
+    Task.query.select.each { |task| tasks << task }
 
-    Task.query.select.each { |task| results << task }
-
-    render json: results
+    render json: tasks
   end
 
-  # def show
-  #   result = Task.query.find({id: params["id"]})
+  def show
+    task = Task.query.find({id: params["id"]}) # route_params: params.to_h["id"]
 
-  #   render json: {result: result}
-  # end
+    render json: {task: task}
+  end
 
   # def create
   #   task = Task.new

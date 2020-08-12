@@ -22,10 +22,7 @@ describe TasksController do
     task2.delete
   end
 
-  it "should find the task" do
-  end
-
-  it "should return a list of tasks", focus: true do
+  pending "should return a list of tasks" do
     response = IO::Memory.new
     app = TasksController.new(context("GET", "/tasks", response_io: response))
 
@@ -33,6 +30,18 @@ describe TasksController do
     data = response.to_s
     data = JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
     data.as_a.size.should eq(2)
+  end
+
+  it "should find the task", focus: true do
+    response = IO::Memory.new
+    context = context("GET", "/tasks/#{task1.id}", response_io: response)
+    context.route_params = {"id" => task1.id.not_nil!.to_s}
+    app = TasksController.new(context)
+
+    app.show
+    data = response.to_s
+    data = JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
+    data.as_h["task"]["id"].should eq(task1.id)
   end
 
   # pending "should find delete a task" do
