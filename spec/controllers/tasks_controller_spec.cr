@@ -32,7 +32,7 @@ describe TasksController do
     data.as_a.size.should eq(2)
   end
 
-  it "should find the task", focus: true do
+  pending "should find the task" do
     response = IO::Memory.new
     context = context("GET", "/tasks/#{task1.id}", response_io: response)
     context.route_params = {"id" => task1.id.not_nil!.to_s}
@@ -44,21 +44,25 @@ describe TasksController do
     data.as_h["task"]["id"].should eq(task1.id)
   end
 
-  # pending "should find delete a task" do
-  #   context = context("DELETE", "/tasks/#{task1.id}")
-  #   context.route_params = {"id" => task1.id.not_nil!.to_s} # What does this mean?
-  #   app = TasksController.new(context)
+  it "should find delete a task", focus: true do
+    response = IO::Memory.new
+    context = context("DELETE", "/tasks/#{task1.id}", response_io: response)
+    context.route_params = {"id" => task1.id.not_nil!.to_s} # What does this mean?
+    app = TasksController.new(context)
 
-  #   app.destroy
+    app.delete
+    data = response.to_s
+    data = JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
+    data.as_h["message"].should eq("OK")
 
-  #   response = IO::Memory.new
-  #   app = TasksController.new(context("GET", "/tasks", response_io: response))
+    response = IO::Memory.new
+    app = TasksController.new(context("GET", "/tasks", response_io: response))
 
-  #   app.index
-  #   data = response.to_s
-  #   data = JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
-  #   data.as_a.size.should eq(1)
-  # end
+    app.index
+    data = response.to_s
+    data = JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
+    data.as_a.size.should eq(1)
+  end
 
   # pending "should create and update a task" do
   #   # instantiate the controller

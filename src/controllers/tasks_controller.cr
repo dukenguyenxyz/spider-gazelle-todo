@@ -13,7 +13,10 @@ class TasksController < Application
   end
 
   def show
-    task = Task.query.find({id: params["id"]}) # route_params: params.to_h["id"]
+    # task = set_task
+    task = Task.query.find({id: params["id"]})
+
+    render(status: 404, json: {error: "Not Found"}) if task.nil?
 
     render json: {task: task}
   end
@@ -56,10 +59,23 @@ class TasksController < Application
   #   end
   # end
 
-  # def destroy
-  #   task = Task.query.where(id: params["id"])
-  #   task.each { |task_unit| task_unit.delete }
+  def delete
+    # task = set_task
+    task = Task.query.find({id: params["id"]})
 
-  #   redirect_to TasksController.index
+    task.delete if !task.nil?
+
+    render status: 200, json: {message: "OK"}
+
+    redirect_to TasksController.index
+  end
+
+  # def set_task
+  #   @task = Task.query.find({id: params["id"]})
+
+  #   # Raise 404 if nil
+  #   if @task.nil?
+  #     render(status: 404, json: {error: "Not Found"})
+  #   end
   # end
 end
