@@ -1,6 +1,6 @@
 # Application dependencies
 require "action-controller"
-require "clear" # require "active-model"
+require "clear"
 require "kilt"
 require "./constants"
 
@@ -14,11 +14,11 @@ require "./db/migrate/*"
 require "action-controller/server"
 
 # initialize a pool of database connection:
-Clear::SQL.init(App::POSTGRES_URI,
+Clear::SQL.init(App::POSTGRES_URI_DEV,
   connection_pool_size: 5)
 
-# # Run migration
-# Clear::Migration::Manager.instance.apply_all
+# Run migration
+Clear::Migration::Manager.instance.apply_all
 
 # Clear.logger.level = ::Logger::DEBUG
 
