@@ -2,7 +2,6 @@ require "../spec_helper"
 
 describe TasksController, focus: true do
   # Create testing data and clearing testing data
-
   task1 = Task.new
   task2 = Task.new
 
@@ -45,5 +44,14 @@ describe TasksController, focus: true do
     body2 = {note: "read Nietzsche's zarathustra"}
     updated = context_generator("PATCH", "update", "/tasks/#{created["id"]}", resource_id: created["id"].to_s, body: body2.to_json)["task"]
     updated["note"].should eq(body2["note"])
+  end
+
+  it "should not find the task" do
+    context_generator("GET", "show", "/tasks/1233", 1233).as_h["message"].should eq("Not Found")
+    context_generator("DELETE", "destroy", "/tasks/1233", 1233).as_h["message"].should eq("Not Found")
+
+    body2 = {note: "read Nietzsche's zarathustra"}
+    updated = context_generator("PATCH", "update", "/tasks/1233", resource_id: "1233", body: body2.to_json)
+    updated["message"].should eq("Not Found")
   end
 end

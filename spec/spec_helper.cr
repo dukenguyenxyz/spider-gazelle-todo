@@ -16,6 +16,7 @@ require "../src/models/task.cr"
 def context_generator(verb : String, action : String, path : String, resource_id : String? | Int32? = nil, body : String? = nil)
   response = IO::Memory.new
   context = context(verb, path, body: body, response_io: response)
+
   context.route_params = {"id" => resource_id.to_s} if !resource_id.nil?
 
   app = TasksController.new(context)
