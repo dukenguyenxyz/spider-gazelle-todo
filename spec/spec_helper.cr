@@ -29,6 +29,13 @@ def context_generator(verb : String, action : String, path : String, resource_id
   when "update"  then app.update
   end
 
-  data = response.to_s
-  JSON.parse(data.split("\r\n").reject(&.empty?)[-1])
+  response.to_s.split("\r\n").reject(&.empty?)
+end
+
+def status_code(response)
+  response[0].split(" ")[1].to_i
+end
+
+def data(response)
+  JSON.parse(response[-1])
 end

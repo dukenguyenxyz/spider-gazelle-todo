@@ -27,9 +27,9 @@ class TasksController < Application
 
     task.save
     if task.save
-      render json: {task: task}
+      render :created, json: {task: task}
     else
-      render json: {error: "An error has occurred"}
+      render :internal_server_error, json: {error: "An error has occurred"}
     end
   end
 
@@ -45,9 +45,9 @@ class TasksController < Application
 
       task.save
       if task.save
-        render json: {task: update_params}
+        render json: {task: task}
       else
-        render json: {error: "An error has occurred"}
+        render :internal_server_error, json: {error: "An error has occurred"}
       end
     end
   end
@@ -57,7 +57,7 @@ class TasksController < Application
     if !task.nil?
       task.delete
 
-      render json: {message: "OK"}
+      render :no_content, json: {message: "OK"}
       redirect_to TasksController.index
     end
   end
@@ -66,7 +66,7 @@ class TasksController < Application
     task = Task.query.find({id: params["id"]})
 
     if task.nil?
-      render(:not_found, json: {message: "Not Found"}) # Raise 404 if nil
+      render :not_found, json: {message: "Not Found"} # Raise 404 if nil
       redirect_to TasksController.index
     end
 
