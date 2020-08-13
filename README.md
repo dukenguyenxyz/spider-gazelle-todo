@@ -4,13 +4,41 @@
 
 ### Routes
 
-|get | /tasks/ |TasksController#index |
-|get | /tasks/:id | TasksController#show |
-|post | /tasks/ |TasksController#create |
-|patch | /tasks/:id | TasksController#update |
-|delete | /tasks/:id | TasksController#destroy |
+| Method | Path       | Controller Actions      |
+| ------ | ---------- | ----------------------- |
+| get    | /tasks/    | TasksController#index   |
+| get    | /tasks/:id | TasksController#show    |
+| post   | /tasks/    | TasksController#create  |
+| patch  | /tasks/:id | TasksController#update  |
+| delete | /tasks/:id | TasksController#destroy |
 
-## Running in Local Environment
+### Task Resource
+
+- Attributes
+  - Title : String
+  - Note : String
+
+#### Create a task
+
+- Send the Task object to TasksController#create `{ title: 'Going shopping' note: 'Brocolli, water spinach, bacon' }`
+
+#### View a task
+
+- Set params ID to task ID /:id/ and send to TasksController#show
+
+#### Update a task
+
+- Set params ID to task ID. Send single or multiple attributes of the Task object to TasksController#update `{ title: 'Going shopping in Parramatta' }`
+
+#### View all tasks
+
+- Send a request to TasksController#index
+
+#### Delete a task
+
+- Set params ID to task ID /:id/ and send to TasksController#destroy
+
+### Running in Local Environment
 
 - to run in development mode `crystal ./src/app.cr`
 
@@ -19,16 +47,16 @@
   - install nodemon `npm i -g nodemon`
   - execute the following command `nodemon --exec crystal ./src/app.cr`
 
-## Testing
+### Testing
 
 - to run all tests `crystal spec`
 - to watch all tests during edits `nodemon --exec crystal spec`
 
-## Compiling
+### Compiling
 
 `crystal build ./src/app.cr`
 
-### Deploying
+#### Deploying
 
 Once compiled you are left with a binary `./app`
 
