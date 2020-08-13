@@ -39,8 +39,8 @@ describe TasksController, focus: true do
   it "should find destroy a task" do
     response1 = context_generator("DELETE", "destroy", "/tasks/#{task1.id}", task1.id)
 
-    status_code(response1).should eq(204) # Status 204
-    data(response1).as_h["message"].should eq("OK")
+    status_code(response1).should eq(200) # Status 200
+    data(response1).as_h["task"]["id"].should eq(task1.id)
 
     response2 = context_generator("GET", "index", "/tasks")
     data(response2).as_a.size.should eq(1)

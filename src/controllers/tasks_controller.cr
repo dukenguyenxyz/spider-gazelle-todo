@@ -57,7 +57,7 @@ class TasksController < Application
     if !task.nil?
       task.delete
 
-      render :no_content, json: {message: "OK"}
+      render json: {task: task}
       redirect_to TasksController.index
     end
   end
