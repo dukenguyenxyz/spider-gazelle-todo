@@ -55,7 +55,7 @@ class TasksController < Application
     end
   end
 
-  def delete
+  def destroy
     # task = set_task  # In the future switch entirely to set_task
     task = Task.query.find({id: params["id"]})
 
