@@ -24,81 +24,26 @@ describe TasksController, focus: true do
   end
 
   it "should return a list of tasks" do
-    # response = IO::Memory.new
-    # app = TasksController.new(context("GET", "/tasks", response_io: response))
-    # app.index
     context_generator("GET", "index", "/tasks").as_a.size.should eq(2)
-
-    # get_data(response).as_a.size.should eq(2)
   end
 
   it "should find the task" do
-    # response = IO::Memory.new
-    # context = context("GET", "/tasks/#{task1.id}", response_io: response)
-    # context.route_params = {"id" => task1.id.not_nil!.to_s}
-    # app = TasksController.new(context)
-    # app.show
-
     context_generator("GET", "show", "/tasks/#{task1.id}", task1.id).as_h["task"]["id"].should eq(task1.id)
-
-    # get_data(response).as_h["task"]["id"].should eq(task1.id)
   end
 
   it "should find destroy a task" do
-    # response = IO::Memory.new
-    # context = context("DELETE", "/tasks/#{task1.id}", response_io: response)
-    # context.route_params = {"id" => task1.id.not_nil!.to_s} # What does this mean?
-    # app = TasksController.new(context)
-    # app.destroy
-
     context_generator("DELETE", "destroy", "/tasks/#{task1.id}", task1.id).as_h["message"].should eq("OK")
-
-    # get_data(response).as_h["message"].should eq("OK")
-
-    # response = IO::Memory.new
-    # app = TasksController.new(context("GET", "/tasks", response_io: response))
-    # app.index
-
     context_generator("GET", "index", "/tasks").as_a.size.should eq(1)
-
-    # get_data(response).as_a.size.should eq(1)
   end
 
   it "should create and update a task" do
-    # response = IO::Memory.new
+    body1 = {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
+    created = context_generator("POST", "create", "/tasks", body: body1.to_json)["task"]
+    created["title"].should eq(body1["title"])
+    created["note"].should eq(body1["note"])
 
-    # # instantiate the controller
-    # # body = IO::Memory.new
-    # # body << %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
-    # # body.rewind
-    body = %({"title":"Finish Dostoyevsky's crime and punishment","note":"Read excerpts of notes from underground"})
-
-    # context = context("POST", "/tasks", body: body, response_io: response)
-    # app = TasksController.new(context)
-    # app.create
-
-    created = context_generator("POST", "create", "/tasks", body: body)["task"]
-
-    # created = get_data(response)["task"]
-    created["title"].should eq("Finish Dostoyevsky's crime and punishment")
-    created["note"].should eq("Read excerpts of notes from underground")
-
-    # response = IO::Memory.new
-
-    # # instantiate the controller
-    # # body = IO::Memory.new
-    # # body << %({"note":"read Nietzsche's zarathustra"})
-    # # body.rewind
-    body = %({"note":"read Nietzsche's zarathustra"})
-
-    # context = context("PATCH", "/tasks/#{created["id"]}", body: body, response_io: response)
-    # context.route_params = {"id" => created["id"].to_s}
-    # app = TasksController.new(context)
-    # app.update
-
-    updated = context_generator("PATCH", "update", "/tasks/#{created["id"]}", resource_id: created["id"].to_s, body: body)["task"]
-
-    # updated = get_data(response)["task"]
-    updated["note"].should eq("read Nietzsche's zarathustra")
+    body2 = {note: "read Nietzsche's zarathustra"}
+    updated = context_generator("PATCH", "update", "/tasks/#{created["id"]}", resource_id: created["id"].to_s, body: body2.to_json)["task"]
+    updated["note"].should eq(body2["note"])
   end
 end

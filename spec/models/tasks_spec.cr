@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 describe Task do
-  it "should save and delete bookings" do
+  pending "should save and delete bookings" do
     task = Task.new
     task.title = "Do the laundry"
     task.note = "Separate clothes by material and colour"

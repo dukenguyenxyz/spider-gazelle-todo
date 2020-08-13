@@ -20,6 +20,8 @@ Clear::SQL.init(App::POSTGRES_URI,
 # # Run migration
 # Clear::Migration::Manager.instance.apply_all
 
+# Clear.logger.level = ::Logger::DEBUG
+
 # Configure logging (backend defined in constants.cr)
 if App.running_in_production?
   log_level = Log::Severity::Info
