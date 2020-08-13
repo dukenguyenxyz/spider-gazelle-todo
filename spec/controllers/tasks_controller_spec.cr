@@ -5,7 +5,9 @@ describe TasksController, focus: true do
   task1 = Task.new
   task2 = Task.new
 
+  # Generate testing data
   Spec.before_each do
+    # Clear the table
     Task.query.each { |task_unit| task_unit.delete }
 
     task1.title = "Commute to work"
@@ -17,11 +19,13 @@ describe TasksController, focus: true do
     task2.save!
   end
 
+  # Clear testing data
   Spec.after_each do
     task1.delete
     task2.delete
   end
 
+  # Test cases
   it "should return a list of tasks" do
     response = context_generator("GET", "index", "/tasks")
 

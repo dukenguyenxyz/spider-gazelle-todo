@@ -1,34 +1,28 @@
-# Spider-Gazelle Application Template
-
-[![Build Status](https://travis-ci.org/spider-gazelle/spider-gazelle.svg?branch=master)](https://travis-ci.org/spider-gazelle/spider-gazelle)
-
-Clone this repository to start building your own spider-gazelle based application
+# Spider-Gazelle To-do App
 
 ## Documentation
 
-Detailed documentation and guides available: https://spider-gazelle.net/
+### Routes
 
-* [Action Controller](https://github.com/spider-gazelle/action-controller) base class for building [Controllers](http://guides.rubyonrails.org/action_controller_overview.html)
-* [Active Model](https://github.com/spider-gazelle/active-model) base class for building [ORMs](https://en.wikipedia.org/wiki/Object-relational_mapping)
-* [Habitat](https://github.com/luckyframework/habitat) configuration and settings for Crystal projects
-* [router.cr](https://github.com/tbrand/router.cr) base request handling
-* [Radix](https://github.com/luislavena/radix) Radix Tree implementation for request routing
-* [HTTP::Server](https://crystal-lang.org/api/latest/HTTP/Server.html) built-in Crystal Lang HTTP server
-  * Request
-  * Response
-  * Cookies
-  * Headers
-  * Params etc
+|get | /tasks/ |TasksController#index |
+|get | /tasks/:id | TasksController#show |
+|post | /tasks/ |TasksController#create |
+|patch | /tasks/:id | TasksController#update |
+|delete | /tasks/:id | TasksController#destroy |
 
+## Running in Local Environment
 
-Spider-Gazelle builds on the amazing performance of **router.cr** [here](https://github.com/tbrand/which_is_the_fastest).:rocket:
+- to run in development mode `crystal ./src/app.cr`
 
+- to run in watch mode
+  - install node.js
+  - install nodemon `npm i -g nodemon`
+  - execute the following command `nodemon --exec crystal ./src/app.cr`
 
 ## Testing
 
-`crystal spec`
-
-* to run in development mode `crystal ./src/app.cr`
+- to run all tests `crystal spec`
+- to watch all tests during edits `nodemon --exec crystal spec`
 
 ## Compiling
 
@@ -38,6 +32,6 @@ Spider-Gazelle builds on the amazing performance of **router.cr** [here](https:/
 
 Once compiled you are left with a binary `./app`
 
-* for help `./app --help`
-* viewing routes `./app --routes`
-* run on a different port or host `./app -b 0.0.0.0 -p 80`
+- for help `./app --help`
+- viewing routes `./app --routes`
+- run on a different port or host `./app -b 0.0.0.0 -p 80`

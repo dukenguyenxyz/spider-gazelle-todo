@@ -5,8 +5,6 @@ dependencies:
   action-controller:
     github: spider-gazelle/action-controller
     version: '~> 3.0'
-  active-model:
-    github: spider-gazelle/active-model
   clear:
     github: anykeyh/clear
     branch: master
@@ -14,11 +12,6 @@ dependencies:
   # Extends ENV to read values injected by docker and kubernetes secrets
   secrets-env:
     github: place-labs/secrets-env
-
-  # https://github.com/jeromegn/kilt
-  # Generic template interface for Crystal
-  kilt:
-    github: jeromegn/kilt
 
 development_dependencies:
   ameba:

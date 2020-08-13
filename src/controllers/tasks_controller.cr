@@ -9,8 +9,7 @@ class TasksController < Application
   getter task : Task?
 
   def index
-    tasks = [] of Task
-    Task.query.select.each { |task| tasks << task }
+    tasks = Task.query.select.to_a
 
     render json: tasks
   end
@@ -36,7 +35,7 @@ class TasksController < Application
   def update
     task = set_task
     if !task.nil?
-      update_params = JSON.parse(request.body.as(IO)).as_h # task.save
+      update_params = JSON.parse(request.body.as(IO)).as_h
 
       update_params.each do |key, value|
         task.title = value.to_s if key == "title"
