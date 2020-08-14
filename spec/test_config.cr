@@ -1,14 +1,19 @@
 # Dependent libs
 require "clear"
+require "simple_retry"
+
 require "action-controller"
 require "action-controller/server"
 
 # Set up testing env
 require "../src/db/migrate/*"
+require "../src/constants.cr"
 
-# Connect to PG
-Clear::SQL.init("postgresql://macbook:passgres@localhost:5432/crystal_to_do_test",
-  connection_pool_size: 5)
+SimpleRetry.try_to(max_attempts: 10, retry_on: DB::ConnectionRefused) do
+  # Connect to PG
+  Clear::SQL.init(App::POSTGRES_URI_TEST,
+    connection_pool_size: 5)
+end
 
 # Run the Migration
 Clear::Migration::Manager.instance.apply_all

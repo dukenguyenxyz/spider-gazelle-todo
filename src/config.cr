@@ -2,6 +2,7 @@
 require "action-controller"
 require "clear"
 require "./constants"
+require "simple_retry"
 
 # Application code
 require "./controllers/application"
@@ -12,9 +13,11 @@ require "./db/migrate/*"
 # Server required after application controllers
 require "action-controller/server"
 
-# Initialize a pool of database connection:
-Clear::SQL.init(App::POSTGRES_URI_DEV,
-  connection_pool_size: 5)
+SimpleRetry.try_to(max_attempts: 10, retry_on: DB::ConnectionRefused) do
+  # Connect to PG
+  Clear::SQL.init(App::POSTGRES_URI_DEV,
+    connection_pool_size: 5)
+end
 
 # Run migration
 Clear::Migration::Manager.instance.apply_all

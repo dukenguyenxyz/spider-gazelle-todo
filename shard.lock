@@ -4,10 +4,6 @@ shards:
     git: https://github.com/spider-gazelle/action-controller.git
     version: 3.1.5
 
-  active-model:
-    git: https://github.com/spider-gazelle/active-model.git
-    version: 1.8.4
-
   admiral:
     git: https://github.com/jwaldrip/admiral.cr.git
     version: 1.11.2+git.commit.c3c3467953654554b72c24e7b853d6fbb23f10c0
@@ -44,14 +40,6 @@ shards:
     git: https://github.com/phoffer/inflector.cr.git
     version: 0.1.8
 
-  json_mapping:
-    git: https://github.com/crystal-lang/json_mapping.cr.git
-    version: 0.1.0
-
-  kilt:
-    git: https://github.com/jeromegn/kilt.git
-    version: 0.6.0
-
   pg:
     git: https://github.com/will/crystal-pg.git
     version: 0.21.1+git.commit.cafe111fc28e366c219144d5f656c3718d7357dd
@@ -60,7 +48,7 @@ shards:
     git: https://github.com/place-labs/secrets-env.git
     version: 1.0.0
 
-  yaml_mapping:
-    git: https://github.com/crystal-lang/yaml_mapping.cr.git
-    version: 0.1.0
+  simple_retry:
+    git: https://github.com/spider-gazelle/simple_retry.git
+    version: 1.1.0
 

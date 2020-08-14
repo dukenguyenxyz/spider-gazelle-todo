@@ -1,4 +1,4 @@
-name: spider-gazelle
+name: crystal-to-do
 version: 1.0.0
 
 dependencies:
@@ -7,11 +7,15 @@ dependencies:
     version: '~> 3.0'
   clear:
     github: anykeyh/clear
-    branch: master
+    version: ~> 0.8
 
   # Extends ENV to read values injected by docker and kubernetes secrets
   secrets-env:
     github: place-labs/secrets-env
+
+  simple_retry:
+    github: spider-gazelle/simple_retry
+    version: ~> 1.1
 
 development_dependencies:
   ameba:
