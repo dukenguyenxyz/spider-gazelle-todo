@@ -1,6 +1,15 @@
 language: crystal
+
+services:
+  - docker
+
+before_script:
+
 install:
   - shards install
+
 script:
+  - docker-compose up
   - crystal spec
+  - crystal tool format --check
   - bin/ameba
