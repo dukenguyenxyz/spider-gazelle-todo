@@ -8,6 +8,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: crystal_to_do_test
     volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
       - ./data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
@@ -15,10 +16,10 @@ services:
     image: crystallang/crystal
     restart: always
     environment:
-      POSTGRES_URI: 'postgresql://postgres:password@db:5432/crystal_to_do_test'
+      POSTGRES_URI: postgresql://postgres:password@db:5432/crystal_to_do_prod
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     depends_on:
       - db
     ports:
