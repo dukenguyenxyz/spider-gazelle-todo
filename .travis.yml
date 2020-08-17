@@ -9,4 +9,5 @@ install:
 script:
   - crystal tool format --check
   - bin/ameba
-  - docker-compose up
+  - docker-compose build
+  - docker-compose up --exit-code-from web

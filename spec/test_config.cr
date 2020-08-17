@@ -15,6 +15,9 @@ SimpleRetry.try_to(max_attempts: 10, retry_on: DB::ConnectionRefused) do
     connection_pool_size: 5)
 end
 
+# App::POSTGRES_URI_TEST
+# "postgresql://postgres:password@db:5432/crystal_to_do_test"
+
 # Run the Migration
 Clear::Migration::Manager.instance.apply_all
 
