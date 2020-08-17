@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  web:
+    image: crystallang/crystal
+    restart: always
+    environment:
+      POSTGRES_URI: 'postgresql://postgres:password@db:5432/crystal_to_do_test'
+    build:
+      context: ./
+      dockerfile: Dockerfile.test
+    depends_on:
+      - db
+    ports:
+      - 4000:8080

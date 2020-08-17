@@ -1,6 +1,12 @@
 language: crystal
+
+services:
+  - docker
+
 install:
   - shards install
+
 script:
-  - crystal spec
+  - crystal tool format --check
   - bin/ameba
+  - ENV_VAR=test docker-compose up --build --exit-code-from web

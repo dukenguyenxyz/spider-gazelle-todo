@@ -4,13 +4,13 @@
 
 ### Routes
 
-| Method | Path       | Controller Actions      |
-| ------ | ---------- | ----------------------- |
-| get    | /tasks/    | TasksController#index   |
-| get    | /tasks/:id | TasksController#show    |
-| post   | /tasks/    | TasksController#create  |
-| patch  | /tasks/:id | TasksController#update  |
-| delete | /tasks/:id | TasksController#destroy |
+| Method | Path | Controller Actions      |
+| ------ | ---- | ----------------------- |
+| get    | /    | TasksController#index   |
+| get    | /:id | TasksController#show    |
+| post   | /    | TasksController#create  |
+| patch  | /:id | TasksController#update  |
+| delete | /:id | TasksController#destroy |
 
 ### Task Resource
 
@@ -40,6 +40,11 @@
 
 ### Running in Local Environment
 
+## With Docker
+- Test Environment: `ENV_VAR=test docker-compose up --build --exit-code-from web`
+- Production Environment: `ENV_VAR=prod docker-compose up --build --exit-code-from web`
+
+## Without Docker
 - to run in development mode `crystal ./src/app.cr`
 
 - to run in watch mode
