@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
@@ -10,4 +10,4 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - "5432:5432"

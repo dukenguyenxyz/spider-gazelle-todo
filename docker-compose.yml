@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
@@ -11,7 +11,7 @@ services:
       - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
       - ./data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - "5432:5432"
   web:
     image: crystallang/crystal
     restart: always
