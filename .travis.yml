@@ -9,5 +9,4 @@ install:
 script:
   - crystal tool format --check
   - bin/ameba
-  - docker-compose build
-  - docker-compose up --exit-code-from web
+  - ENV_VAR=test docker-compose up --build --exit-code-from web

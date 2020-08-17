@@ -25,6 +25,8 @@ RUN adduser \
     "${USER}"
 
 # Build App
+COPY shard.yml .
+COPY shard.lock .
 RUN shards build --error-trace --production
 
 # Extract dependencies

@@ -16,10 +16,10 @@ services:
     image: crystallang/crystal
     restart: always
     environment:
-      POSTGRES_URI: postgresql://postgres:password@db:5432/crystal_to_do_prod
+      POSTGRES_URI: postgresql://postgres:password@db:5432/crystal_to_do_${ENV_VAR}
     build:
       context: ./
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.${ENV_VAR}
     depends_on:
       - db
     ports:
