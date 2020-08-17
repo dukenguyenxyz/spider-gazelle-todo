@@ -9,7 +9,7 @@ install:
   - shards install
 
 script:
-  - docker-compose up
+  - docker-compose up --exit-code-from web
   - crystal spec
   - crystal tool format --check
   - bin/ameba
