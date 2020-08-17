@@ -44,7 +44,7 @@
 
 ## With Docker
 - Test Environment: `ENV_VAR=test docker-compose up --build --exit-code-from web`
-- Production Environment: `ENV_VAR=prod docker-compose up --build --exit-code-from web`
+- Production Environment: `ENV_VAR=prod docker-compose up --build`
 
 ## Without Docker
 - to run in development mode `crystal ./src/app.cr`

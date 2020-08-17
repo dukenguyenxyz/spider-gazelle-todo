@@ -1,3 +1,4 @@
+require "action-controller"
 require "json"
 require "../models/task.cr"
 
@@ -59,6 +60,13 @@ class TasksController < Application
       render json: {task: task}
       redirect_to TasksController.index
     end
+  end
+
+  delete "/", :destroy_all do
+    Task.query.select.each { |task| task.delete }
+
+    render json: {message: "All items have been deleted"}
+    redirect_to TasksController.index
   end
 
   private def set_task

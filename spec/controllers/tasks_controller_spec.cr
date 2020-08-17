@@ -50,6 +50,16 @@ describe TasksController, focus: true do
     data(response2).as_a.size.should eq(1)
   end
 
+  it "should destroy all tasks" do
+    response1 = context_generator("DELETE", "destroy_all", "/todos")
+
+    status_code(response1).should eq(200) # Status 200
+    data(response1).as_h["message"].should eq("All items have been deleted")
+
+    response2 = context_generator("GET", "index", "/")
+    data(response2).as_a.size.should eq(0)
+  end
+
   it "should create and update a task" do
     body1 = {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
     response1 = context_generator("POST", "create", "/", body: body1.to_json)
