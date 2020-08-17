@@ -1,5 +1,5 @@
-CREATE USER prod WITH PASSWORD 'prod' CREATEDB;
-CREATE DATABASE crystal_to_do_prod
+CREATE USER test WITH PASSWORD 'test' CREATEDB;
+CREATE DATABASE crystal_to_do_test
     WITH 
     OWNER = postgres
     ENCODING = 'UTF8'
