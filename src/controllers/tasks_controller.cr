@@ -2,7 +2,7 @@ require "json"
 require "../models/task.cr"
 
 class TasksController < Application
-  base "/tasks"
+  base "/todos"
 
   # before_action :set_task, except: [:index, :create]
 

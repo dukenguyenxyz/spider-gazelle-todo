@@ -3,13 +3,10 @@ language: crystal
 services:
   - docker
 
-before_script:
-
 install:
   - shards install
 
 script:
-  - docker-compose up --exit-code-from web
-  - crystal spec
   - crystal tool format --check
   - bin/ameba
+  - docker-compose up

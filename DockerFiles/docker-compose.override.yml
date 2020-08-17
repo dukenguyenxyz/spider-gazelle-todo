@@ -1,16 +1,6 @@
 version: '3.7'
 
 services:
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: crystal_to_do_test
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
   web:
     image: crystallang/crystal
     restart: always
@@ -18,7 +8,7 @@ services:
       POSTGRES_URI: 'postgresql://postgres:password@db:5432/crystal_to_do_test'
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test
     depends_on:
       - db
     ports:

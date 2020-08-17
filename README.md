@@ -4,13 +4,13 @@
 
 ### Routes
 
-| Method | Path       | Controller Actions      |
-| ------ | ---------- | ----------------------- |
-| get    | /tasks/    | TasksController#index   |
-| get    | /tasks/:id | TasksController#show    |
-| post   | /tasks/    | TasksController#create  |
-| patch  | /tasks/:id | TasksController#update  |
-| delete | /tasks/:id | TasksController#destroy |
+| Method | Path | Controller Actions      |
+| ------ | ---- | ----------------------- |
+| get    | /    | TasksController#index   |
+| get    | /:id | TasksController#show    |
+| post   | /    | TasksController#create  |
+| patch  | /:id | TasksController#update  |
+| delete | /:id | TasksController#destroy |
 
 ### Task Resource
 
