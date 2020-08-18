@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 # Task model spec
-describe Task, focus: true do
+describe Task do
   it "should create a task (from JSON), save and delete it" do
     task = Task.new(JSON.parse(%({"title":"Wash the dishes"})))
 
