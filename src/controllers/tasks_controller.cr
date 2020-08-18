@@ -12,7 +12,7 @@ class TasksController < Application
   def index
     tasks = Task.query.select.to_a
 
-    render json: tasks
+    render text: tasks.to_json
 
     # Unable to conditionally return 404 if array is empty due to todobackend specification
   end
@@ -20,7 +20,7 @@ class TasksController < Application
   def show
     task = set_task
     if !task.nil?
-      render json: JSON.parse(task.to_json)
+      render text: task.to_json
     end
   end
 
@@ -33,9 +33,9 @@ class TasksController < Application
     task.save
 
     if task.save
-      render :created, json: JSON.parse(task.to_json)
+      render :created, text: task.to_json
     else
-      render :internal_server_error, json: {} of String => String
+      render :internal_server_error, text: ({} of String => String).to_json
     end
   end
 
@@ -52,9 +52,9 @@ class TasksController < Application
 
       task.save
       if task.save
-        render json: JSON.parse(task.to_json)
+        render text: task.to_json
       else
-        render :internal_server_error, json: {} of String => String
+        render :internal_server_error, text: ({} of String => String).to_json
       end
     end
   end
@@ -64,7 +64,7 @@ class TasksController < Application
     if !task.nil?
       task.delete
 
-      render json: JSON.parse(task.to_json)
+      render text: task.to_json
       redirect_to TasksController.index
     end
   end
@@ -72,7 +72,7 @@ class TasksController < Application
   delete "/", :destroy_all do
     Task.query.select.each { |task| task.delete }
 
-    render json: {} of String => String
+    render text: ({} of String => String).to_json
     redirect_to TasksController.index
   end
 
@@ -88,7 +88,7 @@ class TasksController < Application
     task = Task.query.find({id: params["id"]})
 
     if task.nil?
-      render :not_found, json: {} of String => String # Raise 404 if nil
+      render :not_found, text: ({} of String => String).to_json # Raise 404 if nil
       redirect_to TasksController.index
     end
 
