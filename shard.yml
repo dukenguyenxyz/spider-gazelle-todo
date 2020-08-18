@@ -4,7 +4,7 @@ version: 1.0.0
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: '~> 3.0'
+    version: "~> 3.0"
   clear:
     github: anykeyh/clear
     version: ~> 0.8
