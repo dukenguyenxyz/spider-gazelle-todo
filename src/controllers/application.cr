@@ -5,6 +5,7 @@ abstract class Application < ActionController::Base
   # NOTE:: this is chaining from App::Log
   Log = ::App::Log.for("controller")
 
+  before_action :enable_cors
   before_action :set_request_id
   before_action :set_date_header
 
@@ -26,5 +27,12 @@ abstract class Application < ActionController::Base
 
   def set_date_header
     response.headers["Date"] = HTTP.format_time(Time.utc)
+  end
+
+  # Enable CORS
+  def enable_cors
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Content-Type"] = "application/json"
   end
 end

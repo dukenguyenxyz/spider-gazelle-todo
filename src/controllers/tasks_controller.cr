@@ -26,7 +26,7 @@ class TasksController < Application
 
     task.save
     if task.save
-      render :created, json: {task: task}
+      render :created, json: JSON.parse(task.to_json)
     else
       render :internal_server_error, json: {error: "An error has occurred"}
     end
@@ -59,6 +59,14 @@ class TasksController < Application
       render json: {task: task}
       redirect_to TasksController.index
     end
+  end
+
+  options "/", :option_task do
+    response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH"
+  end
+
+  options "/:id", :option_task_id do
+    response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH"
   end
 
   private def set_task
