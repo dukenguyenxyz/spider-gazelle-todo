@@ -31,7 +31,9 @@
 
 #### Update a task
 
-- Set params ID to task ID. Send single or multiple attributes of the Task object to TasksController#update `{ title: 'Going shopping in Parramatta, completed: true, order: 5' }`
+- Set params ID to task ID. Send single or multiple attributes of the Task
+  object to TasksController#update
+  `{ title: 'Going shopping in Parramatta, completed: true, order: 5' }`
 
 #### View all tasks
 
@@ -45,7 +47,8 @@
 
 ## With Docker
 
-- Test Environment: `ENV_VAR=test docker-compose up --build --exit-code-from web`
+- Test Environment:
+  `ENV_VAR=test docker-compose up --build --exit-code-from web`
 
 - Production Environment: `ENV_VAR=prod docker-compose up --build`
 
