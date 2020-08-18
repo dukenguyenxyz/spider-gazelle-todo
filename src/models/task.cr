@@ -4,7 +4,9 @@ class Task
   column id : Int32, primary: true, presence: false
 
   column title : String, column_name: "title"
-  column note : String?, column_name: "note"
+  column completed : Bool?, column_name: "completed"
+  column order : Int32?, column_name: "order"
+  column url : String?, column_name: "url"
 
   self.table = "tasks"
 end

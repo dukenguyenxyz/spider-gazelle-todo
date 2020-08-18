@@ -15,7 +15,7 @@ require "action-controller/server"
 
 SimpleRetry.try_to(max_attempts: 10, retry_on: DB::ConnectionRefused) do
   # Connect to PG
-  Clear::SQL.init(App::POSTGRES_URI_DEV,
+  Clear::SQL.init(App::POSTGRES_URI_PROD,
     connection_pool_size: 5)
 end
 

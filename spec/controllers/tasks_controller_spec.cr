@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe TasksController, focus: true do
+describe TasksController do
   # Create testing data and clearing testing data
   task1 = Task.new
   task2 = Task.new
@@ -11,11 +11,9 @@ describe TasksController, focus: true do
     Task.query.each { |task_unit| task_unit.delete }
 
     task1.title = "Commute to work"
-    task1.note = "Buy gimbap from Korean shop on the way"
     task1.save!
 
     task2.title = "Finish spider-gazelle to do app"
-    task2.note = "Write specs before anything"
     task2.save!
   end
 
@@ -60,20 +58,20 @@ describe TasksController, focus: true do
     data(response2).as_a.size.should eq(0)
   end
 
-  it "should create and update a task" do
-    body1 = {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
-    response1 = context_generator("POST", "create", "/", body: body1.to_json)
-    status_code(response1).should eq(201) # Status: 201
-    created = data(response1)["task"]
-    created["title"].should eq(body1["title"])
-    created["note"].should eq(body1["note"])
+  # it "should create and update a task" do
+  #   body1 = {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
+  #   response1 = context_generator("POST", "create", "/", body: body1.to_json)
+  #   status_code(response1).should eq(201) # Status: 201
+  #   created = data(response1)["task"]
+  #   created["title"].should eq(body1["title"])
+  #   created["note"].should eq(body1["note"])
 
-    body2 = {note: "read Nietzsche's zarathustra"}
-    response2 = context_generator("PATCH", "update", "/todos/#{created["id"]}", resource_id: created["id"].to_s, body: body2.to_json)
-    status_code(response2).should eq(200) # Status 200
-    updated = data(response2)["task"]
-    updated["note"].should eq(body2["note"])
-  end
+  #   body2 = {note: "read Nietzsche's zarathustra"}
+  #   response2 = context_generator("PATCH", "update", "/todos/#{created["id"]}", resource_id: created["id"].to_s, body: body2.to_json)
+  #   status_code(response2).should eq(200) # Status 200
+  #   updated = data(response2)["task"]
+  #   updated["note"].should eq(body2["note"])
+  # end
 
   it "should not find the task" do
     response1 = context_generator("GET", "show", "/todos/1233", 1233)

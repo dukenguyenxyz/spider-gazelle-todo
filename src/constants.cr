@@ -19,7 +19,7 @@ module App
   COOKIE_SESSION_KEY    = ENV["COOKIE_SESSION_KEY"]? || "_spider_gazelle_"
   COOKIE_SESSION_SECRET = ENV["COOKIE_SESSION_SECRET"]? || "4f74c0b358d5bab4000dd3c75465dc2c"
 
-  POSTGRES_URI_DEV  = ENV["POSTGRES_URI"]? || "postgresql://postgres:password@localhost:5432/crystal_to_do_prod"
+  POSTGRES_URI_PROD = ENV["POSTGRES_URI"]? || "postgresql://postgres:password@localhost:5432/crystal_to_do_prod"
   POSTGRES_URI_TEST = ENV["POSTGRES_URI"]? || "postgresql://postgres:password@localhost:5432/crystal_to_do_test"
 
   def self.running_in_production?

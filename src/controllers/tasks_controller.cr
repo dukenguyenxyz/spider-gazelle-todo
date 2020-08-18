@@ -18,13 +18,14 @@ class TasksController < Application
   def show
     task = set_task
     if !task.nil?
-      render json: {task: task}
+      render json: JSON.parse(task.to_json)
     end
   end
 
   def create
     task = Task.new(JSON.parse(request.body.as(IO)))
-
+    task.save
+    task.url = "http://#{request.headers["host"]}/todos/#{task.id}"
     task.save
     if task.save
       render :created, json: JSON.parse(task.to_json)
@@ -40,12 +41,13 @@ class TasksController < Application
 
       update_params.each do |key, value|
         task.title = value.to_s if key == "title"
-        task.note = value.to_s if key == "note"
+        task.completed = value.as_bool if key == "completed"
+        task.order = value.as_i if key == "order"
       end
 
       task.save
       if task.save
-        render json: {task: task}
+        render json: JSON.parse(task.to_json)
       else
         render :internal_server_error, json: {error: "An error has occurred"}
       end
@@ -57,7 +59,7 @@ class TasksController < Application
     if !task.nil?
       task.delete
 
-      render json: {task: task}
+      render json: JSON.parse(task.to_json)
       redirect_to TasksController.index
     end
   end
