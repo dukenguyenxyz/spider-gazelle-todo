@@ -18,11 +18,12 @@ def context_generator(verb : String, action : String, path : String, resource_id
 
   # Perform controller action
   case action
-  when "index"   then app.index
-  when "show"    then app.show
-  when "destroy" then app.destroy
-  when "create"  then app.create
-  when "update"  then app.update
+  when "index"       then app.index
+  when "show"        then app.show
+  when "destroy"     then app.destroy
+  when "destroy_all" then app.destroy_all
+  when "create"      then app.create
+  when "update"      then app.update
   end
 
   # Remove line breaks from JSON and nil values from response after split
