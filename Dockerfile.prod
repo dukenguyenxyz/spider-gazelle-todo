@@ -1,4 +1,4 @@
-FROM crystallang/crystal:latest-alpine
+FROM crystallang/crystal:0.35.1-alpine
 ADD . /src
 WORKDIR /src
 
@@ -30,7 +30,7 @@ COPY shard.lock .
 RUN shards build --error-trace --production
 
 # Extract dependencies
-RUN ldd bin/app | tr -s '[:blank:]' '\n' | grep '^/' | \
+RUN ldd bin/spidergazelletodo | tr -s '[:blank:]' '\n' | grep '^/' | \
     xargs -I % sh -c 'mkdir -p $(dirname deps%); cp % deps%;'
 
 # Build a minimal docker image
@@ -38,7 +38,7 @@ FROM scratch
 WORKDIR /
 ENV PATH=$PATH:/
 COPY --from=0 /src/deps /
-COPY --from=0 /src/bin/app /app
+COPY --from=0 /src/bin/spidergazelletodo /spidergazelletodo
 COPY --from=0 /etc/hosts /etc/hosts
 
 # These provide certificate chain validation where communicating with external services over TLS
@@ -57,6 +57,6 @@ USER appuser:appuser
 
 # Run the app binding on port 8080
 EXPOSE 8080
-ENTRYPOINT ["/app"]
-HEALTHCHECK CMD ["/app", "-c", "http://127.0.0.1:8080/"]
-CMD ["/app", "-b", "0.0.0.0", "-p", "8080"]
+ENTRYPOINT ["/spidergazelletodo"]
+HEALTHCHECK CMD ["/spidergazelletodo", "-c", "http://127.0.0.1:8080/"]
+CMD ["/spidergazelletodo", "-b", "0.0.0.0", "-p", "8080"]

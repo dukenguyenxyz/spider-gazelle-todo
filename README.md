@@ -51,12 +51,12 @@
 
 ## Without Docker
 
-- to run in development mode `crystal ./src/app.cr`
+- to run in development mode `crystal ./src/spidergazelletodo.cr`
 
 - to run in watch mode
   - install node.js
   - install nodemon `npm i -g nodemon`
-  - execute the following command `nodemon --exec crystal ./src/app.cr`
+  - execute the following command `nodemon --exec crystal ./src/spidergazelletodo.cr`
 
 ### Testing
 
@@ -65,12 +65,12 @@
 
 ### Compiling
 
-`crystal build ./src/app.cr`
+`crystal build ./src/spidergazelletodo.cr`
 
 #### Deploying
 
-Once compiled you are left with a binary `./app`
+Once compiled you are left with a binary `./spidergazelletodo`
 
-- for help `./app --help`
-- viewing routes `./app --routes`
-- run on a different port or host `./app -b 0.0.0.0 -p 80`
+- for help `./spidergazelletodo --help`
+- viewing routes `./spidergazelletodo --routes`
+- run on a different port or host `./spidergazelletodo -b 0.0.0.0 -p 80`
