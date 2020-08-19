@@ -33,6 +33,6 @@ abstract class Application < ActionController::Base
   def enable_cors
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type"
-    response.headers["Content-Type"] = "application/json"
+    response.headers["Content-Type"] = "application/json" # response.content_type = "application/json"
   end
 end

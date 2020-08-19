@@ -1,10 +1,17 @@
-name: spider-gazelle-to-do
+name: spidergazelletodo
 version: 1.0.0
+
+authors:
+  - Duke Nguyen <duke@place.technology>
+
+crystal: 0.35.1
+
+license: MIT
 
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: '~> 3.0'
+    version: ~> 3.0
   clear:
     github: anykeyh/clear
     version: ~> 0.8
@@ -12,6 +19,7 @@ dependencies:
   # Extends ENV to read values injected by docker and kubernetes secrets
   secrets-env:
     github: place-labs/secrets-env
+    version: ~> 1.0.0
 
   simple_retry:
     github: spider-gazelle/simple_retry
@@ -20,10 +28,9 @@ dependencies:
 development_dependencies:
   ameba:
     github: veelenga/ameba
+    version: ~> 0.13.1
 
 # compile target
 targets:
-  app:
-    main: src/app.cr
-  clear:
-    main: lib/clear/src/clear/cli.cr
+  spidergazelletodo:
+    main: src/spidergazelletodo.cr

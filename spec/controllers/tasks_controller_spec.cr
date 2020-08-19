@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe TasksController do
+describe TasksController, focus: true do
   # Create testing data and clearing testing data
   task1 = Task.new
   task2 = Task.new
@@ -24,67 +24,64 @@ describe TasksController do
   end
 
   # Test cases
-  it "should return a list of tasks" do
-    response = context_generator("GET", "index", "/")
+  with_server do
+    it "should return a list of tasks" do
+      response = curl("GET", "/todos")
+      response.status_code.should eq(200)
+      JSON.parse(response.body).as_a.size.should eq(2)
+    end
 
-    status_code(response).should eq(200) # Status 200
-    data(response).as_a.size.should eq(2)
-  end
+    it "should find the task through id" do
+      response = curl("GET", "/todos/#{task1.id}")
+      response.status_code.should eq(200)
+      JSON.parse(response.body).as_h["id"].should eq(task1.id)
+    end
 
-  it "should find the task" do
-    response = context_generator("GET", "show", "/todos/#{task1.id}", task1.id)
+    it "should find destroy a task" do
+      response1 = curl("DELETE", "/todos/#{task1.id}")
+      response1.status_code.should eq(200)
+      JSON.parse(response1.body).as_h["id"].should eq(task1.id)
 
-    status_code(response).should eq(200) # Status 200
-    data(response).as_h["task"]["id"].should eq(task1.id)
-  end
+      response2 = curl("GET", "/todos")
+      response2.status_code.should eq(200)
+      JSON.parse(response2.body).as_a.size.should eq(1)
+    end
 
-  it "should find destroy a task" do
-    response1 = context_generator("DELETE", "destroy", "/todos/#{task1.id}", task1.id)
+    it "should destroy all tasks" do
+      response1 = curl("DELETE", "/todos")
+      response1.status_code.should eq(200)
 
-    status_code(response1).should eq(200) # Status 200
-    data(response1).as_h["task"]["id"].should eq(task1.id)
+      response2 = curl("GET", "/todos")
+      JSON.parse(response2.body).as_a.size.should eq(0)
+    end
 
-    response2 = context_generator("GET", "index", "/")
-    data(response2).as_a.size.should eq(1)
-  end
+    it "should create and update a task" do
+      body1 = {title: "Finish Dostoyevsky's crime and punishment", completed: true}
+      response1 = curl("POST", "/todos", body: body1.to_json)
+      response1.status_code.should eq(201)
+      created = JSON.parse(response1.body).as_h
 
-  it "should destroy all tasks" do
-    response1 = context_generator("DELETE", "destroy_all", "/todos")
+      created["title"].should eq(body1["title"])
+      created["completed"].should eq(body1["completed"])
 
-    status_code(response1).should eq(200) # Status 200
-    data(response1).as_h["message"].should eq("All items have been deleted")
+      body2 = {completed: false}
+      response2 = curl("PATCH", "/todos/#{created["id"]}", body: body2.to_json)
+      response2.status_code.should eq(200)
+      updated = JSON.parse(response2.body).as_h
 
-    response2 = context_generator("GET", "index", "/")
-    data(response2).as_a.size.should eq(0)
-  end
+      updated["completed"].should eq(body2["completed"])
+    end
 
-  # it "should create and update a task" do
-  #   body1 = {title: "Finish Dostoyevsky's crime and punishment", note: "Read excerpts of notes from underground"}
-  #   response1 = context_generator("POST", "create", "/", body: body1.to_json)
-  #   status_code(response1).should eq(201) # Status: 201
-  #   created = data(response1)["task"]
-  #   created["title"].should eq(body1["title"])
-  #   created["note"].should eq(body1["note"])
+    it "should not find the task" do
+      body2 = {note: "read Nietzsche's zarathustra"}
+      response1 = curl("GET", "/todos/1233")
+      response1.status_code.should eq(404)
 
-  #   body2 = {note: "read Nietzsche's zarathustra"}
-  #   response2 = context_generator("PATCH", "update", "/todos/#{created["id"]}", resource_id: created["id"].to_s, body: body2.to_json)
-  #   status_code(response2).should eq(200) # Status 200
-  #   updated = data(response2)["task"]
-  #   updated["note"].should eq(body2["note"])
-  # end
+      response2 = curl("DELETE", "/todos/1233")
+      response2.status_code.should eq(404)
 
-  it "should not find the task" do
-    response1 = context_generator("GET", "show", "/todos/1233", 1233)
-    status_code(response1).should eq(404) # Status 404
-    data(response1).as_h["message"].should eq("Not Found")
-
-    response2 = context_generator("DELETE", "destroy", "/todos/1233", 1233)
-    status_code(response2).should eq(404) # Status 404
-    data(response2).as_h["message"].should eq("Not Found")
-
-    body2 = {note: "read Nietzsche's zarathustra"}
-    response3 = context_generator("PATCH", "update", "/todos/1233", resource_id: "1233", body: body2.to_json)
-    status_code(response3).should eq(404) # Status 404
-    data(response3)["message"].should eq("Not Found")
+      response3 = curl("PATCH", "/todos/1233", body: body2.to_json)
+      response3.status_code.should eq(404)
+    end
   end
 end

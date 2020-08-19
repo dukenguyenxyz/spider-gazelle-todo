@@ -2,7 +2,7 @@ doc
 lib
 .crystal
 .shards
-app
+spidergazelletodo
 *.dwarf
 bin
 data

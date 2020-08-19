@@ -6,23 +6,24 @@
 
 ### Routes
 
-| Method | Path | Controller Actions      |
-| ------ | ---- | ----------------------- |
-| get    | /    | TasksController#index   |
-| get    | /:id | TasksController#show    |
-| post   | /    | TasksController#create  |
-| patch  | /:id | TasksController#update  |
-| delete | /:id | TasksController#destroy |
+| Method | Path      | Controller Actions      |
+| ------ | --------- | ----------------------- |
+| get    | /tods     | TasksController#index   |
+| get    | /tods/:id | TasksController#show    |
+| post   | /tods     | TasksController#create  |
+| patch  | /tods/:id | TasksController#update  |
+| delete | /tods/:id | TasksController#destroy |
 
 ### Task Resource
 
 - Attributes
   - Title : String
-  - Note : String
+  - Order : Int32
+  - Completed : Bool
 
 #### Create a task
 
-- Send the Task object to TasksController#create `{ title: 'Going shopping' note: 'Brocolli, water spinach, bacon' }`
+- Send the Task object to TasksController#create `{ title: 'Going shopping' }`
 
 #### View a task
 
@@ -30,7 +31,7 @@
 
 #### Update a task
 
-- Set params ID to task ID. Send single or multiple attributes of the Task object to TasksController#update `{ title: 'Going shopping in Parramatta' }`
+- Set params ID to task ID. Send single or multiple attributes of the Task object to TasksController#update `{ title: 'Going shopping in Parramatta, completed: true, order: 5' }`
 
 #### View all tasks
 
@@ -43,16 +44,19 @@
 ### Running in Local Environment
 
 ## With Docker
+
 - Test Environment: `ENV_VAR=test docker-compose up --build --exit-code-from web`
+
 - Production Environment: `ENV_VAR=prod docker-compose up --build`
 
 ## Without Docker
-- to run in development mode `crystal ./src/app.cr`
+
+- to run in development mode `crystal ./src/spidergazelletodo.cr`
 
 - to run in watch mode
   - install node.js
   - install nodemon `npm i -g nodemon`
-  - execute the following command `nodemon --exec crystal ./src/app.cr`
+  - execute the following command `nodemon --exec crystal ./src/spidergazelletodo.cr`
 
 ### Testing
 
@@ -61,12 +65,12 @@
 
 ### Compiling
 
-`crystal build ./src/app.cr`
+`crystal build ./src/spidergazelletodo.cr`
 
 #### Deploying
 
-Once compiled you are left with a binary `./app`
+Once compiled you are left with a binary `./spidergazelletodo`
 
-- for help `./app --help`
-- viewing routes `./app --routes`
-- run on a different port or host `./app -b 0.0.0.0 -p 80`
+- for help `./spidergazelletodo --help`
+- viewing routes `./spidergazelletodo --routes`
+- run on a different port or host `./spidergazelletodo -b 0.0.0.0 -p 80`
