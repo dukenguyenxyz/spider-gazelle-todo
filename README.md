@@ -1,6 +1,6 @@
 # Spider-Gazelle To-do App
 
-[![Build Status](https://travis-ci.org/dukeraphaelng/crystal-to-do.svg?branch=master)](https://travis-ci.org/dukeraphaelng/crystal-to-do)
+[![Build Status](https://travis-ci.org/dukeraphaelng/spider-gazelle-todo.svg?branch=master)](https://travis-ci.org/dukeraphaelng/spider-gazelle-todo)
 
 ## Documentation
 
