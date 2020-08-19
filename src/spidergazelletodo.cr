@@ -1,6 +1,5 @@
 require "option_parser"
 require "./constants"
-require "secrets-env"
 
 # Server defaults
 port = App::DEFAULT_PORT

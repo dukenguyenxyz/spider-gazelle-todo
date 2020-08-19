@@ -9,7 +9,6 @@ require "./controllers/application"
 require "./controllers/*"
 require "./models/*"
 require "./db/migrate/*"
-require "secrets-env"
 
 # Server required after application controllers
 require "action-controller/server"
