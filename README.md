@@ -6,13 +6,13 @@
 
 ### Routes
 
-| Method | Path      | Controller Actions      |
-| ------ | --------- | ----------------------- |
-| get    | /tods     | TasksController#index   |
-| get    | /tods/:id | TasksController#show    |
-| post   | /tods     | TasksController#create  |
-| patch  | /tods/:id | TasksController#update  |
-| delete | /tods/:id | TasksController#destroy |
+| Method | Path       | Controller Actions      |
+| ------ | ---------- | ----------------------- |
+| get    | /todos     | TasksController#index   |
+| get    | /todos/:id | TasksController#show    |
+| post   | /todos     | TasksController#create  |
+| patch  | /todos/:id | TasksController#update  |
+| delete | /todos/:id | TasksController#destroy |
 
 ### Task Resource
 
