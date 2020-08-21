@@ -7,40 +7,42 @@ class TasksController < Application
 
   # before_action :set_task, except: [:index, :create]
 
-  getter task : Task?
+  # getter task : Task? { set_task }
 
   def index
     tasks = Task.query.select.to_a
-
-    render text: tasks.to_json
-
-    # Unable to conditionally return 404 if array is empty due to todobackend specification
+    render text: tasks.to_json # Unable to conditionally return 404 if array is empty due to todobackend specification
   end
 
   def show
-    task = set_task
-    if !task.nil?
-      render text: task.to_json
-    end
+    task : Task? = set_task
+    render text: task.to_json if !task.nil?
   end
 
   def create
     task = Task.new(JSON.parse(request.body.as(IO)))
-    task.save
+    task.save!
 
-    # Production using headers key, testing using host key
-    task.url = "http://#{request.headers.has_key?("host") ? request.headers["host"] : request.host}/todos/#{task.id}"
-    task.save
-
-    if task.save
-      render :created, text: task.to_json
-    else
-      render :internal_server_error, text: ({} of String => String).to_json
+    Clear::SQL.with_savepoint do
+      # Production using headers key, testing using host key
+      task.url = "http://#{request.headers.has_key?("host") ? request.headers["host"] : request.host}/todos/#{task.id}"
+      task.save!
+      Clear::SQL.rollback if !task.valid?
+      Clear::SQL.with_savepoint do
+        render :created, text: task.to_json
+      end
     end
+  rescue exception # Bug here
+    # puts exception
+    # if typeof(exception) == Clear::Model::Error
+    head :bad_request
+    # else
+    #   head :internal_server_error
+    # end
   end
 
   def update
-    task = set_task
+    task : Task? = set_task
     if !task.nil?
       update_params = JSON.parse(request.body.as(IO)).as_h
 
@@ -50,48 +52,40 @@ class TasksController < Application
         task.order = value.as_i if key == "order"
       end
 
-      task.save
-      if task.save
+      begin
+        task.save
         render text: task.to_json
-      else
-        render :internal_server_error, text: ({} of String => String).to_json
+      rescue exception
+        head :internal_server_error
       end
     end
   end
 
   def destroy
-    task = set_task
+    task : Task? = set_task
     if !task.nil?
       task.delete
 
       render text: task.to_json
-      redirect_to TasksController.index
     end
   end
 
   delete "/", :destroy_all do
     Task.query.select.each { |task| task.delete }
-
-    render text: ({} of String => String).to_json
-    redirect_to TasksController.index
+    head :ok
   end
 
-  options "/", :option_task do
+  options "/" do
     response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH"
   end
 
-  options "/:id", :option_task_id do
+  options "/:id" do
     response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH"
   end
 
   private def set_task
-    task = Task.query.find({id: params["id"]})
-
-    if task.nil?
-      render :not_found, text: ({} of String => String).to_json # Raise 404 if nil
-      redirect_to TasksController.index
-    end
-
-    task
+    Task.query.find!({id: params["id"]})
+  rescue
+    head :not_found
   end
 end
