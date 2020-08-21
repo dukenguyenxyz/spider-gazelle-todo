@@ -1,11 +1,11 @@
-version: '3.7'
+version: "3.7"
 
 services:
   web:
     image: crystallang/crystal
     restart: always
     environment:
-      POSTGRES_URI: 'postgresql://postgres:password@db:5432/crystal_to_do_prod'
+      POSTGRES_URI: "postgresql://postgres:password@db:5432/crystal_to_do_prod"
     build:
       context: ./
       dockerfile: Dockerfile.prod

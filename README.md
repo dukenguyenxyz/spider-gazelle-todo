@@ -20,7 +20,8 @@
 
 #### Create a task
 
-- Send the Task object to TasksController#create `{ title: 'Going shopping' note: 'Brocolli, water spinach, bacon' }`
+- Send the Task object to TasksController#create
+  `{ title: 'Going shopping' note: 'Brocolli, water spinach, bacon' }`
 
 #### View a task
 
@@ -28,7 +29,8 @@
 
 #### Update a task
 
-- Set params ID to task ID. Send single or multiple attributes of the Task object to TasksController#update `{ title: 'Going shopping in Parramatta' }`
+- Set params ID to task ID. Send single or multiple attributes of the Task
+  object to TasksController#update `{ title: 'Going shopping in Parramatta' }`
 
 #### View all tasks
 

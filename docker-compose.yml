@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
@@ -10,12 +10,12 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - "5432:5432"
   web:
     image: crystallang/crystal
     restart: always
     environment:
-      POSTGRES_URI: 'postgresql://postgres:password@db:5432/crystal_to_do_test'
+      POSTGRES_URI: "postgresql://postgres:password@db:5432/crystal_to_do_test"
     build:
       context: ./
       dockerfile: Dockerfile
