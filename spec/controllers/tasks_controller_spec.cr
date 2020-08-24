@@ -72,6 +72,12 @@ describe TasksController, focus: true do
       updated["completed"].should eq(body2["completed"])
     end
 
+    it "should not create a task" do
+      body = {completed: false, order: 95}
+      response = curl("POST", "/todos", body: body.to_json)
+      response.status_code.should eq(400)
+    end
+
     it "should not find the task" do
       body2 = {note: "read Nietzsche's zarathustra"}
       response1 = curl("GET", "/todos/1233")

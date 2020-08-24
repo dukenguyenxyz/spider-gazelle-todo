@@ -5,9 +5,7 @@ require "../models/task.cr"
 class TasksController < Application
   base "/todos"
 
-  # before_action :set_task, except: [:index, :create]
-
-  # getter task : Task? { set_task }
+  getter task : Task { set_task }
 
   def index
     tasks = Task.query.select.to_a
@@ -15,8 +13,7 @@ class TasksController < Application
   end
 
   def show
-    task : Task? = set_task
-    render text: task.to_json if !task.nil?
+    render text: task.to_json
   end
 
   def create
@@ -32,42 +29,30 @@ class TasksController < Application
         render :created, text: task.to_json
       end
     end
-  rescue exception # Bug here
-    # puts exception
-    # if typeof(exception) == Clear::Model::Error
-    head :bad_request
-    # else
-    #   head :internal_server_error
-    # end
   end
 
   def update
-    task : Task? = set_task
-    if !task.nil?
-      update_params = JSON.parse(request.body.as(IO)).as_h
+    task # need to query for task and check for error before anything else, do not remove this line
 
-      update_params.each do |key, value|
-        task.title = value.to_s if key == "title"
-        task.completed = value.as_bool if key == "completed"
-        task.order = value.as_i if key == "order"
-      end
+    update_params = JSON.parse(request.body.as(IO)).as_h
 
-      begin
-        task.save
-        render text: task.to_json
-      rescue exception
-        head :internal_server_error
-      end
+    update_params.each do |key, value|
+      task.title = value.to_s if key == "title"
+      task.completed = value.as_bool if key == "completed"
+      task.order = value.as_i if key == "order"
+    end
+
+    begin
+      task.save
+      render text: task.to_json
+    rescue
+      head :internal_server_error
     end
   end
 
   def destroy
-    task : Task? = set_task
-    if !task.nil?
-      task.delete
-
-      render text: task.to_json
-    end
+    task.delete
+    render text: task.to_json
   end
 
   delete "/", :destroy_all do
@@ -84,8 +69,6 @@ class TasksController < Application
   end
 
   private def set_task
-    Task.query.find!({id: params["id"]})
-  rescue
-    head :not_found
+    Task.find!(params["id"])
   end
 end
