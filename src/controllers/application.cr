@@ -35,4 +35,22 @@ abstract class Application < ActionController::Base
     response.headers["Access-Control-Allow-Headers"] = "Content-Type"
     response.headers["Content-Type"] = "application/json" # response.content_type = "application/json"
   end
+
+  # resource not present # currently working
+  rescue_from Clear::SQL::RecordNotFoundError do |error|
+    Log.debug { error.message }
+    head :not_found
+  end
+
+  # handle invalid model # bad form
+  rescue_from Clear::Model::InvalidError do |error|
+    Log.debug { error.message }
+    head :bad_request
+  end
+
+  # handle invalid model # error ?
+  rescue_from Clear::Model::Error do |error|
+    Log.debug { error.message }
+    head :internal_server_error
+  end
 end
